@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container-sm">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 class="display-4" style="color: #343f71;">Settings</h1>
+            <a href="{{ url_for('show_main') }}" class="btn btn-secondary">Back to Main Page</a>
+        </div>
+
+        
+        <!-- A form to update the settings --> 
+        <form method="post" action="{{ url_for('save_settings') }}">
+            <p>Shower scribe has to be restarted for privacy to take effect.</p>
+            <div class="d-grid gap-2 mb-2">
+                <div class="form-group">
+                    <label for="grouping_minutes">Number of Minutes for Grouping:</label>
+                    <input type="number" class="form-control" id="grouping_minutes" name="grouping_minutes" value="{{ user_settings.clustering_time_minutes }}" required>
+                </div>
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="transcription_switch" name="transcription_switch" {% if user_settings.transcription %}checked{% endif %}>
+                    <label class="form-check-label" for="transcription_switch">Enable Transcription (sends audio recordings to AssemblyAI)</label>
+                </div>
+    
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="llm_switch" name="llm_switch" {% if user_settings.resume %}checked{% endif %}>
+                    <label class="form-check-label" for="llm_switch">Enable LLM Service (sends transcriptions to Cohere)</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn" style="background-color: white; color: #343f71; border: 1px solid #343f71;">Save Settings</button>
+        </form>
+    </div>
+    
+{% endblock %}
